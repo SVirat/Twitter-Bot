@@ -71,12 +71,11 @@ def post_free_book():
     book_info = Scraper.get_free_book()
     message = "Today's free eBook is:\n"
     message += book_info[0] + " " + book_info[1]
-    message += "\nFor more eBooks, visit www.dailyfreebooks.com!"
     tweet(message)
 
 def post_stocks():
     """
-    Posts about today's stock information
+    Posts about today's stock information in equal intervals of the day
     """
     num = 1
     stocks = Scraper.get_stocks()
