@@ -11,7 +11,7 @@ def get_on_this_day():
     Go to www.onthisday.com to get significant events that occurred on this day.
     :return: the list of important events on this day
     """
-    url = "http://www.onthisday.com/"
+    url = "https://www.onthisday.com/today/events.php"
     page = requests.get(url)
     soup = BeautifulSoup(page.content, "html.parser")
     events = soup.find_all('li', class_= "event-list__item")
@@ -27,6 +27,7 @@ def get_quote():
     soup = BeautifulSoup(page.content, "html.parser")
     quote = soup.find(attrs={"name":"twitter:description"})
     return quote['content']
+
 
 def get_free_book():
     """
