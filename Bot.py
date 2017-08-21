@@ -44,21 +44,19 @@ def post_on_this_day():
     """
     events = Scraper.get_on_this_day()
     # There will be 1 post per num hours
-    num = 24/len(events)
     for event in events:
         message = "Today: "
         message += event.get_text()
         tweet(message)
         # Sleep for num hours
-        sleep(num * 60 * 60)
+        sleep(24/len(events) * 60 * 60)
 
 def post_quote():
     """
     Posts a quote every day at a random time
     """
-    num = random.randint(1, 23)
     # Sleep for a random amount of hours, between 1 and 23
-    sleep(num * 60 * 60)
+    sleep(random.randint(1, 23) * 60 * 60)
     quote = Scraper.get_quote()
     message = "Quote of the day:\n"
     message += quote
@@ -68,14 +66,28 @@ def post_free_book():
     """
     Posts about a free eBook available at a random time
     """
-    num = random.randint(1, 23)
     # Sleep for a random amount of hours, between 1 and 23
-    sleep(num * 60 * 60)
+    sleep(random.randint(1, 23) * 60 * 60)
     book_info = Scraper.get_free_book()
     message = "Today's free eBook is:\n"
-    message += book_info[0] + book_info[1]
+    message += book_info[0] + " " + book_info[1]
     message += "\nFor more eBooks, visit www.dailyfreebooks.com!"
     tweet(message)
+
+def post_stocks():
+    """
+    Posts about today's stock information
+    """
+    num = 1
+    stocks = Scraper.get_stocks()
+    for stock in stocks:
+        message = "Today's Stock Info #" + str(num) + ": \n"
+        message += "Name: " + stock[0] + "\n"
+        message += "Price: " + stock[1] + "\n"
+        message += "Change: " + stock[2] + "\n"
+        message += "%Change: " + stock[3]
+        num += 1
+        sleep(24/len(stocks) * 60 * 60)
 
 def retweet(hashtag, since, until, max_items):
     """
@@ -132,7 +144,7 @@ def filter(hashtag, since, until, max_items, min_num, retweet):
     :param max_items: the max number of favorites a day
     :param min_num: the minimum number of retweets/favorites the tweet must have
     :param retweet: True if checking for num retweets, false for num favorites
-    :return: list of tweets with sufficient retweets or favorites
+    :return: top 3 items in list of tweets with sufficient retweets or favorites
     """
     tweets = []
     for tweet in tweepy.Cursor(bot.search, q=hashtag, since=since, until=until).items(max_items):
@@ -142,7 +154,7 @@ def filter(hashtag, since, until, max_items, min_num, retweet):
         else:
             if tweet.favorite_count > min_num:
                 tweets.append(tweet)
-    return tweets
+    return tweets[:3]
 
 # Build the bot
 bot = setup()
@@ -153,17 +165,20 @@ if __name__ == "__main__":
     today_op = Process(target=post_on_this_day)
     quote_op = Process(target=post_quote)
     book_op = Process(target=post_free_book)
+    stock_op = Process(target=post_stocks())
     retweet_op = Process(target=retweet,args=("#Robot", last_few_days, date.today(), 50))
     favorite_op = Process(target=favorite,args=("#Bird", last_few_days, date.today(), 50))
     # Starting each operation in parallel
     today_op.start()
     quote_op.start()
     book_op.start()
+    stock_op.start()
     retweet_op.start()
     favorite_op.start()
     # Joining operations so all end at the same time
     today_op.join()
     quote_op.join()
     book_op.join()
+    stock_op.join()
     retweet_op.join()
     favorite_op.join()
