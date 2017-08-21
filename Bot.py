@@ -56,7 +56,7 @@ def post_quote():
     Posts a quote every day at a random time
     """
     # Sleep for a random amount of hours, between 1 and 23
-    sleep(random.randint(1, 23) * 60 * 60)
+    sleep((random.sample(range(1,23), 1))[0] * 60 * 60)
     quote = Scraper.get_quote()
     message = "Quote of the day:\n"
     message += quote
@@ -67,7 +67,7 @@ def post_free_book():
     Posts about a free eBook available at a random time
     """
     # Sleep for a random amount of hours, between 1 and 23
-    sleep(random.randint(1, 23) * 60 * 60)
+    sleep((random.sample(range(1,23), 1))[0] * 60 * 60)
     book_info = Scraper.get_free_book()
     message = "Today's free eBook is:\n"
     message += book_info[0] + " " + book_info[1]
