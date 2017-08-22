@@ -85,6 +85,7 @@ def post_stocks():
         message += "Price: " + stock[1] + "\n"
         message += "Change: " + stock[2] + "\n"
         message += "%Change: " + stock[3]
+        tweet(message)
         num += 1
         sleep(24/len(stocks) * 60 * 60)
 
@@ -164,7 +165,7 @@ if __name__ == "__main__":
     today_op = Process(target=post_on_this_day)
     quote_op = Process(target=post_quote)
     book_op = Process(target=post_free_book)
-    stock_op = Process(target=post_stocks())
+    stock_op = Process(target=post_stocks)
     retweet_op = Process(target=retweet,args=("#Robot", last_few_days, date.today(), 50))
     favorite_op = Process(target=favorite,args=("#Bird", last_few_days, date.today(), 50))
     # Starting each operation in parallel
