@@ -4,4 +4,4 @@ A twitter bot that tweets certain information every day, such as free eBooks cur
 
 The bot scraps the web to get the information, and utilizes BeautifulSoup to read the information properly. It utilizes multiprocessing to run all these operations concurrently.
 
-This particular Twitter bot is active on RobotBird, @ASCIIBird: https://twitter.com/ASCIIBird.
+This particular Twitter bot is active on Robot Bird, @ASCIIBirdBot: https://twitter.com/ASCIIBirdBot.
