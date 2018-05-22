@@ -10,3 +10,4 @@ The Bot's Twitter handle: @ASCIIBird.
 
 Here: https://twitter.com/ASCIIBird
 
+![Twitter Bot in action](C:\Users\virat\OneDrive\Pictures\Screenshots\TwitterBot.png "Twitter Bot in action")
