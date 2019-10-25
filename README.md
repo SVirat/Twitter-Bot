@@ -8,6 +8,4 @@ The bot scraps the web to get the information, and utilizes BeautifulSoup to rea
 
 The Bot's Twitter handle: @ASCIIBird. 
 
-Here: https://twitter.com/ASCIIBird
-
 ![Twitter Bot in action](https://i.imgur.com/xGyWgHy.png)
